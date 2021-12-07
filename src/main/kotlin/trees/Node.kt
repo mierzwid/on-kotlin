@@ -1,3 +1,5 @@
+package trees
+
 class Node(var value: Int) {
 
     var left: Node? = null
