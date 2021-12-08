@@ -1,0 +1,71 @@
+k - Mark Budget
+prices - array of int toy prices
+
+sort it with QuickSort - this might be the fastest 
+
+[1, 2, 3, 4] 0, 3, p=2 
+[1, 2, 3, 4] 1, 3, p=2 
+[1, 2, 3, 4] 1, 2, p=2 
+[1, 2, 3, 4] 1, 1, p=2 
+[1, 2, 3, 4] 2, 0, p=2 
+[1, 2] 0, 1, p=1 [3, 4] 2, 3, p=3
+[1,2,3,4]
+
+quickSort(array, left, right)
+	if left >= right
+		exit
+	
+	index = partition(array, left, right)
+	
+	quickSort(array, left, index - 1)
+	quickSort(array, index, right)
+	
+
+partition(array, left, right)
+	pivot = array[(left + right) / 2]
+	
+	while(left <= right) {
+		while(array[left] < pivot) left ++
+		while(array[right] > pivot) right --
+		if left <= right {
+			swap(array, left, right)
+			left ++
+			right --
+		}	
+	}
+	
+	return left
+		
+
+fun quickSort(array: Array<Int>, left: Int, right: Int) {
+	if(left >= right) return
+	
+	val index = partition(array, left, right)
+	
+	quickSort(array, left, index - 1)
+	quickSort(array, index, right)
+}
+
+fun partition(array: Array<Int>, leftIn: Int, rightIn: Int): Int {
+	val pivot = array[(leftIn + rightIn)/2]
+	var left = leftIn
+	var right = rightIn
+	
+	while(left <= right) {
+		while(array[left] < pivot) left ++
+		while(array[right] > pivot) right --
+		if(left <= right) {
+			array.swap(left, right)
+			left ++
+			right --
+		}
+	}
+	return left
+}
+
+fun Array<Int>.swap(left: Int, right: Int) {
+	val tmp = this[left]
+	this[left] = this[right]
+	this[right] = tmp
+}
+	
