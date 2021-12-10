@@ -1,0 +1,35 @@
+up to 10 000
+24 characters [a-z]
+a: frequency, b: , c
+two feq maps
+
+"damian"
+
+
+fun countCharFrequency(string: String): Map<Char, Int> {
+    val frequencies = mutableMapOf<Char, Int>()
+    for(char in string.toCharArray()) {
+        frequencies[char] = (frequencies[char] ?: 0) + 1
+    }
+    return frequencies
+}
+
+[d: 1, a: 2, m: 1, i: 1]
+
+[d: 1, a: 1, i: 1, n: 2]
+
+keys [d, a, m, i, n]
+
+1, 1
+
+fun makeAnagram(a: String, b: String): Int {
+    val aFreqs = countCharFrequency(a)
+    val bFreqs = countCharFrequency(b)
+    var distance = 0
+    for(char in aFreqs.keys + bFreqs.keys){
+        val aFreq = aFreqs[char] ?: 0
+        val bFreq = bFreqs[char] ?: 0
+        distance += Math.abs(aFreq - bFreq)
+    }
+    return distance
+}
