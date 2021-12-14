@@ -28,19 +28,22 @@ import kotlin.math.abs
 
 fun isValid(s: String): String {
     val frequencies = mutableMapOf<Char, Int>()
-    for(char in s.toCharArray()) {
+    for (char in s.toCharArray()) {
         frequencies[char] = (frequencies[char] ?: 0) + 1
     }
     val byValue = mutableMapOf<Int, List<Char>>()
-    for((char, freq) in frequencies) {
+    for ((char, freq) in frequencies) {
         byValue[freq] = (byValue[freq] ?: emptyList()) + char
     }
     val distinctCharFrequencies = byValue.keys
     return when {
         distinctCharFrequencies.size == 1 -> "YES"
         distinctCharFrequencies.size > 2 -> "NO"
+        distinctCharFrequencies.first() == 1 && byValue[distinctCharFrequencies.first()]?.size == 1 -> "YES"
+        distinctCharFrequencies.last() == 1 && byValue[distinctCharFrequencies.last()]?.size == 1 -> "YES"
         Math.abs(distinctCharFrequencies.first() - distinctCharFrequencies.last()) > 1 -> "NO"
-        (byValue[distinctCharFrequencies.first()]?.size ?: 0) > 1 && (byValue[distinctCharFrequencies.last()]?.size ?: 0) > 1 -> "NO"
+        (byValue[distinctCharFrequencies.first()]?.size ?: 0) > 1 && (byValue[distinctCharFrequencies.last()]?.size
+            ?: 0) > 1 -> "NO"
         else -> "YES"
     }
 }
