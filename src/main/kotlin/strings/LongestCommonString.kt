@@ -1,7 +1,6 @@
 package strings
 
 class LongestCommonString {
-    val cache = mutableMapOf<Pair<Int, Int>, Int>()
     fun dropDistinctCharacters(s1: String, s2: String): Pair<String, String> {
         var truncatedS1 = s1
         var truncatedS2 = s2
@@ -13,25 +12,41 @@ class LongestCommonString {
     }
 
 
-    fun commonChild(s1Pointer: Int, s1Array: CharArray, s2Pointer: Int, s2Array: CharArray): Int {
-        if (cache[s1Pointer to s2Pointer] != null) return cache[s1Pointer to s2Pointer] ?: throw IllegalStateException()
+    fun longestCommonString(
+        s1: String,
+        s2: String,
+        s1Pointer: Int = 0,
+        s2Pointer: Int = 0,
+        cache: Array<Array<Int>> = Array(s1.length + 1) { Array(s2.length + 1) { -1 } }
+    ): Int {
+        if (cache[s1Pointer][s2Pointer] != -1) return cache[s1Pointer][s2Pointer]
         val lcs = when {
-            s1Pointer == s1Array.size -> 0
-            s2Pointer == s2Array.size -> 0
+            s1Pointer == s1.length -> 0
+            s2Pointer == s2.length -> 0
             else -> {
-                if (s1Array[s1Pointer] == s2Array[s2Pointer]) {
-                    1 + commonChild(s1Pointer + 1, s1Array, s2Pointer + 1, s2Array)
+                if (s1[s1Pointer] == s2[s2Pointer]) {
+                    1 + longestCommonString(s1, s2, s1Pointer + 1, s2Pointer + 1, cache)
                 } else {
                     Math.max(
-                        commonChild(s1Pointer, s1Array, s2Pointer + 1, s2Array),
-                        commonChild(s1Pointer + 1, s1Array, s2Pointer, s2Array)
+                        longestCommonString(s1, s2, s1Pointer, s2Pointer + 1, cache),
+                        longestCommonString(s1, s2, s1Pointer + 1, s2Pointer, cache)
                     )
                 }
             }
         }
-        cache[s1Pointer to s2Pointer] = lcs
+        cache[s1Pointer][s2Pointer] = lcs
         return lcs
     }
+
+//    HARRY
+//    SALLY
+//      H A R R Y
+//    S 2 2 1 1 1 0
+//    A 2 2 1 1 1 0
+//    L 1 1 1 1 1 0
+//    L 1 1 1 1 1 0
+//    Y 1 1 1 1 1 0
+//      0 0 0 0 0 0
 
     fun longestCommonString(s1: String, s2: String): Int {
         val result = Array(s1.length + 1) { Array(s2.length + 1) { 0 } }
