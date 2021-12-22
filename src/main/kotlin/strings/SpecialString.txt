@@ -1,0 +1,113 @@
+
+string
+specialStringsCount = 0
+
+  a a a
+a
+a
+a
+1 + 1 + 1 + 1 + 1 + 1
+
+
+fun substrCount(n: Int, s: String): Long {
+    var specialStringsCount = 0L
+    for(start in string.indices) {
+        for(end in string.lastIndex downTo start) {
+            if(isSpecial(string, start, end)) specialStringsCount ++
+        }
+    }
+    return specialStringsCount
+}
+
+fun isSpecial(string: String, start: Int, end: Int): Boolean {
+    when {
+        start == end -> return true
+        (end - start + 1) % 2 == 0 -> {
+            for(idx in start..end)
+                if(string[idx] != string[start]) return false
+            return true
+        }
+        (end - start + 1) % 2 == 1 -> {
+            middle = (start + end) / 2
+            for (idx in start..end){
+                if(idx == middle) continue
+                if(string[idx] != string[start]) return false
+            }
+            return true
+        }
+    }
+    throw IllegalStateException()
+}
+
+
+for start in string.indices
+    for end in string.lastIndex downTo start
+        if isSpecial(string, start, end)
+            specialStringsCount ++
+
+return  specialStringsCount
+
+aba, 0, 2
+
+isSpecial(string, start, end)
+    when
+        start == end -> return true
+        (end - start + 1) % 2 == 0 -> {
+            for idx in start..end
+                if(string[idx] != string[start]) return false
+            return true
+        }
+        (end - start + 1) % 2 == 1 -> {
+            middle = (start + end) / 2
+            for idx in start..end
+                if(idx == middle) continue
+                if(string[idx] != string[start]) return false
+            return true
+        }
+
+
+
+
+
+Algorithm:
+cos = 0
+1) if string is 1 char long -> coss = 1
+2) if string is special -> coss = 1 + coss(string - string[last]) + coss(string - string[first])
+
+mnonopoo
+
+  o o p o n o n m
+m 0 0 0 0 0 0 0 1
+n 0 0 0 0 1 0 1
+o 0 0 0 1 0 1
+n 0 0 0 0 1
+o 0 1 0 1
+p 0 0 1
+o 1 1
+o 1
+
+12
+
+Is special when
+1 all characters are the same, aaa
+2 all except the middle one are the same aabaa
+
+aaa
+
+special sub-strings
+aaa
+aa
+aa
+a
+a
+a
+
+aba
+
+special sub-strings
+aba
+a
+a
+b
+
+
