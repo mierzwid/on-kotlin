@@ -1,0 +1,67 @@
+
+
+fun substrCount(n: Int, string: String): Long {
+    var specials = 0L
+    for(start in string.indices) {
+        var pointer = start
+        val first = string[pointer]
+        // iterate while chars are equal
+        while(pointer <= string.lastIndex && string[pointer] == first) {
+            specials ++
+            pointer ++
+        }
+        // if we reached the end of the string, change start char
+        if(pointer >= string.lastIndex) continue
+        // if we reach different char, check if this is this special medium element
+        val elementsSoFar = pointer - start + 1
+            val predictedEndOfSpecial = pointer + elementsSoFar - 1
+        // if remaining elements won't build special string
+        if (predictedEndOfSpecial >= string.length) continue
+        // check if this is special with medium
+        pointer ++
+        while(pointer <= predictedEndOfSpecial && string[pointer] == first) pointer ++
+        // check if it was special
+        if(pointer > predictedEndOfSpecial) specials ++
+    }
+    return specials
+}
+
+asasd
+specials = 7
+start = 4
+pointer = 5
+first = d
+
+
+
+start = 3
+pointer = 4
+first = s
+elementsSoFar = 2
+predictedEndOfSpecial = 5
+
+
+start = 2
+pointer = 4
+first = a
+elementsSoFar = 2
+predictedEndOfSpecial = 4
+
+
+
+start = 1
+pointer = 4
+first = s
+elementsSoFar = 2
+predictedEndOfSpecial = 3
+
+
+start = 0
+pointer = 3
+first = a
+elementsSoFar = 2
+predictedEndOfSpecial = 3
+
+
+
+
