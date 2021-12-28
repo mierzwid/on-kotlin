@@ -20,16 +20,11 @@ class MinimumSwaps {
         val positions = Array(array.size + 1) { -1 }
         var swaps = 0
         for ((index, value) in array.withIndex()) {
+            positions[value] = index
+        }
+        for ((index, value) in array.withIndex()) {
             val properValue = index + 1
             if (value == properValue) continue
-
-            positions[value] = index
-            if (positions[properValue] == -1) {
-                for (position in (index + 1)..array.lastIndex) {
-                    positions[array[position]] = position
-                    if (array[position] == properValue) break
-                }
-            }
             swap(array, index, positions[properValue])
             swap(positions, value, properValue)
             swaps++
