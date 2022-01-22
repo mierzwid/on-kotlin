@@ -17,9 +17,7 @@ class Primes {
             }
             var next = prime + 1
             while (next < numbers.size) {
-                if (flags[next]) {
-                    prime = next
-                }
+                if (flags[next]) prime = next
                 next++
             }
             return prime
