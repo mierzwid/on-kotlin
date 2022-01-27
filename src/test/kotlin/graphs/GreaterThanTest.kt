@@ -7,9 +7,10 @@ internal class GreaterThanTest {
 
     @Test
     fun `test greater than` () {
-        assertTrue(GreaterThan().checkValidity("a>bc<ac>b"))
-        assertTrue(GreaterThan().checkValidity(""))
-        assertTrue(GreaterThan().checkValidity("a<b"))
-        assertFalse(GreaterThan().checkValidity("a<bc<ac>b"))
+        assertFalse(GreaterThan().checkValidityDFS("a>bb>cc>ad>a"))
+        assertTrue(GreaterThan().checkValidityDFS("a>bc<ac>b"))
+        assertTrue(GreaterThan().checkValidityDFS(""))
+        assertTrue(GreaterThan().checkValidityDFS("a<b"))
+        assertFalse(GreaterThan().checkValidityDFS("a<bc<ac>b"))
     }
 }

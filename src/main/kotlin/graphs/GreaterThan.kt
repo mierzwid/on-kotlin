@@ -14,7 +14,7 @@ class GreaterThan {
 //    elem = b
 //    smallerElem in {}
 
-    fun checkValidity(relations: String): Boolean {
+    fun checkValidityCustom(relations: String): Boolean {
         val theGreatest = mutableSetOf<Char>()
         val greaterThan = mutableMapOf<Char, HashSet<Char>>()
         val smallerThan = mutableMapOf<Char, HashSet<Char>>()
@@ -39,5 +39,30 @@ class GreaterThan {
         }
         return smallerThan.isEmpty()
 
+    }
+
+    fun checkValidityDFS(relations: String): Boolean {
+        val smallerThan = LinkedHashMap<Char, HashSet<Char>>()
+        for (idx in 0..relations.lastIndex step 3) {
+            val greater = if (relations[idx + 1] == '>') relations[idx] else relations[idx + 2]
+            val smaller = if (relations[idx + 1] == '>') relations[idx + 2] else relations[idx]
+            smallerThan.getOrPut(greater) { HashSet() }.add(smaller)
+        }
+
+        fun searchForCycle(greater: Char, visited: Set<Char> = emptySet()): Boolean {
+            if (visited.contains(greater)) return true
+            val currentVisited = visited + greater
+            for (smaller in smallerThan[greater] ?: emptySet()) {
+                if (searchForCycle(smaller, currentVisited)) return true
+            }
+            smallerThan.remove(greater)
+            return false
+        }
+
+        for (greater in HashSet(smallerThan.keys)) {
+            if (smallerThan[greater] == null) continue
+            if (searchForCycle(greater, mutableSetOf())) return false
+        }
+        return true
     }
 }
