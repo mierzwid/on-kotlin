@@ -1,5 +1,8 @@
 package graphs
 
+import java.util.*
+import kotlin.collections.HashSet
+
 //Snakes & ladders
 //
 //Board Size > Int.MAX_VALUE
@@ -26,20 +29,25 @@ package graphs
 //use it
 
 
-fun minMoves(boardSize: Int, ladders: Map<Int, Int>, position: Int = 0, count: Int = 0): Int {
-    if(position >= boardSize) return count
-    var min = Int.MAX_VALUE
-    var withoutLadder = position
-    for(move in 1..6) {
-        val dest = position + move
-        if(ladders[dest] != null){
-            min = Math.min(min, minMoves(boardSize, ladders, ladders[dest]!!, count + 1))
-        } else {
-            withoutLadder = dest
+class Position(val id: Int, val throws: Int)
+
+fun minMoves(boardSize: Int, laddersNSnakes: Map<Int, Int>): Int {
+    val queue = LinkedList<Position>()
+    val visited = HashSet<Int>()
+    queue.add(Position(1, 0))
+    visited.add(1)
+    while(queue.isNotEmpty()) {
+        val current = queue.remove()
+        if(current.id >= boardSize) return current.throws
+        for(move in 1..6) {
+            var dest = current.id + move
+            while(laddersNSnakes.containsKey(dest)) dest = laddersNSnakes[dest]!!
+            if(visited.contains(dest)) continue
+            queue.add(Position(dest, current.throws+1))
+            visited.add(dest)
         }
     }
-    if(withoutLadder == position) return min
-    return Math.min(min, minMoves(boardSize, ladders, withoutLadder, count + 1))
+    throw IllegalStateException()
 }
 
 //boardSize = 7
