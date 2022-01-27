@@ -29,21 +29,21 @@ import kotlin.collections.HashSet
 //use it
 
 
-class Position(val id: Int, val throws: Int)
+class Position(val idx: Int, val throws: Int)
 
 fun minMoves(boardSize: Int, laddersNSnakes: Map<Int, Int>): Int {
     val queue = LinkedList<Position>()
     val visited = HashSet<Int>()
     queue.add(Position(1, 0))
     visited.add(1)
-    while(queue.isNotEmpty()) {
+    while (queue.isNotEmpty()) {
         val current = queue.remove()
-        if(current.id >= boardSize) return current.throws
-        for(move in 1..6) {
-            var dest = current.id + move
-            while(laddersNSnakes.containsKey(dest)) dest = laddersNSnakes[dest]!!
-            if(visited.contains(dest)) continue
-            queue.add(Position(dest, current.throws+1))
+        if (current.idx >= boardSize) return current.throws
+        for (move in 1..6) {
+            var dest = current.idx + move
+            while (laddersNSnakes.containsKey(dest)) dest = laddersNSnakes[dest]!!
+            if (visited.contains(dest)) continue
+            queue.add(Position(dest, current.throws + 1))
             visited.add(dest)
         }
     }
