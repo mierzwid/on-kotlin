@@ -1,5 +1,8 @@
 package heap
 
+import java.util.*
+import kotlin.collections.ArrayList
+
 // We don’t provide test cases in this language yet, but have outlined the signature for you. Please write your code below, and don’t forget to test edge cases!
 
 fun main(args: Array<String>) {
@@ -94,15 +97,15 @@ private fun <E> java.util.ArrayList<E>.swap(index: E, greaterIndex: E) {
 }
 
 fun maxCandies(arr: Array<Int>, k: Int): Int {
-    val maxHeap = MaxHeap()
+    val maxHeap = PriorityQueue<Int> { a, b -> b - a }
     for (bag in arr) {
-        maxHeap.push(bag)
+        maxHeap.add(bag)
     }
     var eatenCandies = 0
     for (round in 1..k) {
         val bestBag = maxHeap.poll()
         eatenCandies += bestBag
-        maxHeap.push(bestBag / 2)
+        maxHeap.add(bestBag / 2)
     }
     return eatenCandies
 }
